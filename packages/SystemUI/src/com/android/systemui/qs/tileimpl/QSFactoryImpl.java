@@ -29,6 +29,7 @@ import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.external.CustomTile;
 import com.android.systemui.qs.tiles.AirplaneModeTile;
 import com.android.systemui.qs.tiles.AntiFlickerTile;
+import com.android.systemui.qs.tiles.AmbientDisplayTile;
 import com.android.systemui.qs.tiles.BatterySaverTile;
 import com.android.systemui.qs.tiles.BluetoothTile;
 import com.android.systemui.qs.tiles.CaffeineTile;
@@ -98,7 +99,8 @@ public class QSFactoryImpl implements QSFactory {
      private final Provider<LiveDisplayTile> mLiveDisplayTileProvider;
      private final Provider<SoundSearchTile> mSoundSearchTileProvider;
      private final Provider<AntiFlickerTile> mAntiFlickerTileProvider;
-    private final Provider<HeadsUpTile> mHeadsUpTileProvider;
+     private final Provider<AmbientDisplayTile> mAmbientDisplayTileProvider;
+     private final Provider<HeadsUpTile> mHeadsUpTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
 
@@ -128,6 +130,7 @@ public class QSFactoryImpl implements QSFactory {
 	    Provider<CaffeineTile> caffeineTileProvider,
 	    Provider<CompassTile> compassTileProvider,
             Provider<DataSwitchTile> dataSwitchTileProvider,
+            Provider<AmbientDisplayTile> ambientDisplayTileProvider,
             Provider<SyncTile> syncTileProvider,
             Provider<LiveDisplayTile> liveDisplayTileProvider,
             Provider<SoundSearchTile> soundSearchTileProvider,
@@ -157,6 +160,7 @@ public class QSFactoryImpl implements QSFactory {
         mPowerShareTileProvider = powerShareTileProvider;
 
         //Additions
+        mAmbientDisplayTileProvider = ambientDisplayTileProvider;
         mCaffeineTileProvider = caffeineTileProvider;
 	mCompassTileProvider = compassTileProvider;
         mDataSwitchTileProvider = dataSwitchTileProvider;
@@ -219,6 +223,8 @@ public class QSFactoryImpl implements QSFactory {
             // Custom tiles.
             case "powershare":
                 return mPowerShareTileProvider.get();
+            case "ambient_display":
+                return mAmbientDisplayTileProvider.get();
             case "caffeine":
                 return mCaffeineTileProvider.get();
             case "dataswitch":
