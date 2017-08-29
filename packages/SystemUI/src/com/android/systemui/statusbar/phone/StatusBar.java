@@ -538,8 +538,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mUserSetup = userSetup;
                 if (!mUserSetup && mStatusBarView != null)
                     animateCollapseQuickSettings();
-                if (mNotificationPanelViewController != null) {
-                    mNotificationPanelViewController.setUserSetupComplete(mUserSetup);
+                if (mNotificationShadeWindowViewController != null) {
+                    mNotificationShadeWindowViewController.setLockscreenDoubleTapToSleep();
                 }
                 updateQsExpansionEnabled();
             }
@@ -2194,6 +2194,9 @@ public class StatusBar extends SystemUI implements DemoMode,
            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN),
                     false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2217,6 +2220,9 @@ public class StatusBar extends SystemUI implements DemoMode,
            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN))) {
                 setLockscreenDoubleTapToSleep();
+           } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE))) {
+                setLockscreenDoubleTapToSleep();
             }
         }
 
@@ -2231,11 +2237,10 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
    private void setLockscreenDoubleTapToSleep() {
-        if (mNotificationPanelViewController != null) {
-            mNotificationPanelViewController.setLockscreenDoubleTapToSleep();
+	    if (mNotificationShadeWindowViewController != null) {
+            mNotificationShadeWindowViewController.setLockscreenDoubleTapToSleep();
         }
     }
-
    private void setQsBatteryPercentMode() {
         if (mQSBarHeader != null) {
             ((QuickStatusBarHeader) mQSBarHeader).setBatteryPercentMode();
