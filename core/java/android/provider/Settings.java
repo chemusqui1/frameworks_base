@@ -10021,6 +10021,12 @@ public final class Settings {
         public static final String BUTTON_BRIGHTNESS = "button_brightness";
 
         /**
+         * Whether to hide lock icon on lockscreen
+         * {@hide}
+         */
+        public static final String HIDE_LOCKICON = "hide_lockicon";
+
+        /**
          * The keyboard brightness to be used while the screen is on.
          * Valid value range is between 0 and {@link PowerManager#getMaximumKeyboardBrightness()}
          * @hide
