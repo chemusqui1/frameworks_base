@@ -469,7 +469,6 @@ public class KeyguardIndicationController implements StateListener,
                 mTextView.switchIndication(com.android.internal.R.string.lockscreen_storage_locked);
             } else if (!TextUtils.isEmpty(mTransientIndication)) {
                 mTextView.switchIndication(mTransientIndication);
-                isError = mTransientTextIsError;
             } else if (!TextUtils.isEmpty(trustGrantedIndication)
                     && mKeyguardUpdateMonitor.getUserHasTrust(userId)) {
                 if (powerIndication != null) {
