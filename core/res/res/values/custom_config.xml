@@ -234,4 +234,7 @@
         <item>restart</item>
         <item>screenshot</item> <!--2 buttons nav-->
     </string-array>
+
+    <!-- Whether device has fingerprint on power button -->
+    <bool name="config_powerButtonFingerprint">false</bool>
 </resources>

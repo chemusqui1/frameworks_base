@@ -218,6 +218,7 @@ import com.android.server.ExtconUEventObserver;
 import com.android.server.GestureLauncherService;
 import com.android.server.LocalServices;
 import com.android.server.SystemServiceManager;
+import com.android.server.biometrics.Utils;
 import com.android.server.inputmethod.InputMethodManagerInternal;
 import com.android.server.policy.keyguard.KeyguardServiceDelegate;
 import com.android.server.policy.keyguard.KeyguardServiceDelegate.DrawnListener;
@@ -396,6 +397,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     final Object mServiceAquireLock = new Object();
     Vibrator mVibrator; // Vibrator for giving feedback of orientation changes
     SearchManager mSearchManager;
+    private boolean interceptPowerKeyAuthOrEnroll = false;
+    private long interceptPowerKeyTimeByFinger = -1;
+    private boolean isAuthenOrEnrollRunningWhenDown = false;
     AccessibilityManager mAccessibilityManager;
     BurnInProtectionHelper mBurnInProtectionHelper;
     private DisplayFoldController mDisplayFoldController;
@@ -650,6 +654,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // Fallback actions by key code.
     private final SparseArray<KeyCharacterMap.FallbackAction> mFallbackActions =
             new SparseArray<KeyCharacterMap.FallbackAction>();
+
+    private WindowManagerPolicy.FingerListener mFingerListener;
 
     private final LogDecelerateInterpolator mLogDecelerateInterpolator
             = new LogDecelerateInterpolator(100, 0);
@@ -1136,6 +1142,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         schedulePossibleVeryLongPressReboot();
 
+        isAuthenOrEnrollRunningWhenDown = interceptPowerKeyAuthOrEnroll;
+
         // If the power key has still not yet been handled, then detect short
         // press, long press, or multi press and decide what to do.
         mPowerKeyHandled = hungUp || mScreenshotChordVolumeDownKeyTriggered
@@ -1336,6 +1344,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
      * @return True if the was device was sent to sleep, false if sleep was suppressed.
      */
     private boolean goToSleepFromPowerButton(long eventTime, int flags) {
+        if ((eventTime - interceptPowerKeyTimeByFinger < 700 || isAuthenOrEnrollRunningWhenDown) && Utils.hasPowerButtonFingerprint(mContext)) {
+            return false;
+        }
         // Before we actually go to sleep, we check the last wakeup reason.
         // If the device very recently woke up from a gesture (like user lifting their device)
         // then ignore the sleep instruction. This is because users have developed
@@ -3044,6 +3055,21 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 || keyCode == KeyEvent.KEYCODE_BACK);
     }
 
+    /**
+     * Fingerprint unlock on press
+     */
+    public void registerFingerListener(WindowManagerPolicy.FingerListener listener) {
+        mFingerListener = listener;
+    }
+
+    public void interceptPowerKeyByFinger(long time) {
+        interceptPowerKeyTimeByFinger = time;
+    }
+
+    public void notifySideFpAuthenOrEnroll(boolean start) {
+        interceptPowerKeyAuthOrEnroll = start;
+    }
+
     // TODO(b/117479243): handle it in InputPolicy
     /** {@inheritDoc} */
     @Override
@@ -4540,6 +4566,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
 
             case KeyEvent.KEYCODE_POWER: {
+                if (mFingerListener != null) {
+                    mFingerListener.powerDown(down);
+                }
                 EventLogTags.writeInterceptPower(
                         KeyEvent.actionToString(event.getAction()),
                         mPowerKeyHandled ? 1 : 0, mPowerKeyPressCounter);
@@ -5234,6 +5263,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private void wakeUpFromPowerKey(long eventTime) {
+        if ((eventTime - this.interceptPowerKeyTimeByFinger < 700) && Utils.hasPowerButtonFingerprint(mContext)) {
+            return;
+        }
         wakeUp(eventTime, mAllowTheaterModeWakeFromPowerKey,
                 PowerManager.WAKE_REASON_POWER_BUTTON, "android.policy:POWER");
     }
