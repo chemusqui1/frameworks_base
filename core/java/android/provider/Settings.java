@@ -5650,6 +5650,24 @@ public final class Settings {
         public static final String STATUS_BAR_CLOCK_FONT_STYLE = "status_bar_clock_font_style";
 
         /**
+         * Show ambient icons on lockscreen
+         * @hide
+         */
+        public static final String AMBIENT_ICONS_LOCKSCREEN = "ambient_icons_lockscreen";
+
+        /**
+         * Change size of ambient icons on lockscreen
+         * @hide
+         */
+        public static final String AMBIENT_ICONS_SIZE = "ambient_icons_size";
+
+        /**
+         * Change color of ambient icons on lockscreen
+         * @hide
+         */
+        public static final String AMBIENT_ICONS_COLOR = "ambient_icons_color";
+
+        /**
          * Whether to show status bar on lockscreen
          * @hide
          */
