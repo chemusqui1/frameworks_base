@@ -597,14 +597,6 @@ public class KeyguardIndicationController implements StateListener,
         }
     }
 
-    private boolean hasActiveInDisplayFp() {
-        boolean hasInDisplayFingerprint = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_supportsInDisplayFingerprint);
-        int userId = KeyguardUpdateMonitor.getCurrentUser();
-        FingerprintManager fpm = (FingerprintManager) mContext.getSystemService(Context.FINGERPRINT_SERVICE);
-        return hasInDisplayFingerprint && fpm.getEnrolledFingerprints(userId).size() > 0;
-    }
-
     // animates textView - textView moves up and bounces down
     private void animateText(KeyguardIndicationTextView textView, String indication) {
         int yTranslation = mContext.getResources().getInteger(
