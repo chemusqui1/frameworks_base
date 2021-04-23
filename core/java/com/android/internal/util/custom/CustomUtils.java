@@ -21,6 +21,8 @@ import static android.content.Context.VIBRATOR_SERVICE;
 
 import android.Manifest;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.app.IActivityManager;
 import android.app.ActivityOptions;
 import android.app.NotificationManager;
 import android.app.NotificationManager;
