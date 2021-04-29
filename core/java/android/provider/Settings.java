@@ -10029,13 +10029,6 @@ public final class Settings {
         public static final String VOLUME_LINK_NOTIFICATION = "volume_link_notification";
 
         /**
-         * Whether to show the keyguard visualizer.
-         * Boolean setting. 0 = off, 1 = on.
-         * @hide
-         */
-        public static final String LOCKSCREEN_VISUALIZER_ENABLED = "lockscreen_visualizer";
-
-        /**
          * Whether to show or hide the arrow for back gesture
          * @hide
          */
