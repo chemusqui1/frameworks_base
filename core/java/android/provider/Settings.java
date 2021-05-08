@@ -5586,11 +5586,6 @@ public final class Settings {
         public static final String DOZE_TRIGGER_DOUBLETAP = "doze_trigger_doubletap";
 
         /**
-         * @hide
-         */
-        public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";
-
-        /**
          * Whether to show charging animation on lock screen
          * @hide
          */
@@ -5949,7 +5944,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_ADJUSTMENT);
             PRIVATE_SETTINGS.add(DISPLAY_PICTURE_ADJUSTMENT);
             PRIVATE_SETTINGS.add(LIVE_DISPLAY_HINTED);
-            PRIVATE_SETTINGS.add(USE_OLD_MOBILETYPE);
         }
         /**
          * These entries are considered common between the personal and the managed profile,
