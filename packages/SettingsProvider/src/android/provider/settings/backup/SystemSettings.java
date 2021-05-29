@@ -88,6 +88,7 @@ public class SystemSettings {
         Settings.System.VIBRATE_ON_CONNECT,
         Settings.System.VIBRATE_ON_CALLWAITING,
         Settings.System.VIBRATE_ON_DISCONNECT,
+<<<<<<< HEAD
         Settings.System.DOUBLE_TAP_SLEEP_GESTURE,
         Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN,
         Settings.System.TORCH_LONG_PRESS_POWER_GESTURE,
@@ -96,5 +97,7 @@ public class SystemSettings {
         Settings.System.QS_MEDIA_PLAYER,
         Settings.System.RINGTONE_VIBRATION_PATTERN,
         Settings.System.CUSTOM_RINGTONE_VIBRATION_PATTERN,
+=======
+>>>>>>> parent of a354b98862f... [1/2] base: double tap to sleep on statusbar
     };
 }

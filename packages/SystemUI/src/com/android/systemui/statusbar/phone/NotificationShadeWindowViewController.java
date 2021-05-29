@@ -489,6 +489,7 @@ public class NotificationShadeWindowViewController {
                 mTempLocation[1] + view.getHeight());
         return mTempRect.contains(x, y);
     }
+<<<<<<< HEAD
 
     public void updateSettings() {
         boolean doubleTapToSleepEnabled = Settings.System.getIntForUser(
@@ -505,4 +506,6 @@ public class NotificationShadeWindowViewController {
             mDragDownHelper.updateDoubleTapToSleep(doubleTapToSleepEnabled);
         }
     }
+=======
+>>>>>>> parent of a354b98862f... [1/2] base: double tap to sleep on statusbar
 }
